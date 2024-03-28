@@ -1,46 +1,36 @@
 import streamlit as st
-# import mysql.connector
-# import os
-# from src.pages.Datacred2 import host
-from Datacred import host
+import mysql.connector
+import os
+import datacred as dc
 
 
 def staff_page():
   st.set_page_config(page_title="Staff page", page_icon="")
   st.title("Staff page")
   st.write("Shows all the patients in the hospitals")
-  st.write(host)
-
-#   mysqlconn()
+  mysqlconn()
 
 
 
-# def mysqlconn():
-#     # Connect to MySQL database
-#     connection = mysql.connector.connect(
-#         host="your_host",
-#         user="your_username",
-#         password="your_password",
-#         database="Final_project"
-#     )
 
-#     # Create a cursor object to execute queries
-#     cursor = connection.cursor()
+def mysqlconn():
+    connection = mysql.connector.connect(
+        host=dc.host,
+        user=dc.user,
+        password=dc.password,
+        database=dc.database,
+        port=dc.port
+    )
 
-#     # Query data from the Patients table
-#     cursor.execute("SELECT * FROM Patients")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM Patients")
+    rows = cursor.fetchall()
+    cursor.close()
+    connection.close()
 
-#     # Fetch all rows from the result set
-#     rows = cursor.fetchall()
-
-#     # Close the cursor and connection
-#     cursor.close()
-#     connection.close()
-
-#     # Display data in Streamlit
-#     st.title('Patients Data')
-#     st.write("Data from MySQL table 'Patients':")
-#     st.write(rows)
+    st.title('Patients Data')
+    st.write("Data from MySQL table 'Patients':")
+    st.dataframe(rows) 
 
 
 if __name__ == "__main__":
