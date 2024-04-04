@@ -11,8 +11,6 @@ def staff_page():
   mysqlconn()
 
 
-
-
 def mysqlconn():
     connection = mysql.connector.connect(
         host=dc.host,
