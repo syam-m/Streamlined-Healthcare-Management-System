@@ -47,12 +47,10 @@ def display_patients_data():
         st.write("Data from MySQL table 'Patients':")
 
         with st.expander("Search"):
-            # Allow users to search for a specific value in each column
             search_values = {}
             for column in df.columns:
                 search_values[column] = st.text_input(f"Search {column}:", "")
 
-        # Filter data based on search values
         filtered_data = df.copy()
         for column, value in search_values.items():
             if value:
