@@ -8,7 +8,6 @@ def staff_page():
     st.set_page_config(page_title="Staff page", page_icon="")
     st.title("Patient page")
 
-
     # Allow staff to add new patient (inside an expander)
     with st.expander("Add New Patient"):
         add_new_patient()
@@ -16,6 +15,8 @@ def staff_page():
     st.write("Shows all the patients in the hospitals")
     # Display patient data
     display_patients_data()
+
+
     
 
 
