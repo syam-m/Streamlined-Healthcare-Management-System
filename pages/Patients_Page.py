@@ -49,21 +49,6 @@ def insert_patient_data(first_name, last_name, age, gender, height, weight, alle
     conn.commit()
     st.success("Patient record added successfully!")
 
-# # Function to display patient data with delete option
-# def display_patient_data_with_delete(patient_data):
-#     if patient_data:
-#         df = pd.DataFrame(patient_data, columns=["Patient ID", "First Name", "Last Name", "Age", "Gender", "Height", "Weight", "Allergies", "Address", "Insurance Provider"])
-#         # Add a column with delete button for each row
-#         delete_col = df.apply(lambda row: st.button(f"Delete {row['Patient ID']}"), axis=1)
-#         df.insert(loc=0, column='Delete', value=delete_col)
-#         for idx, row in df.iterrows():
-#             if row['Delete']:
-#                 delete_patient_record(row['Patient ID'])  # Delete the record if the delete button is clicked
-#                 st.experimental_rerun()  # Refresh the page to reflect changes
-#         st.dataframe(df)
-#     else:
-#         st.write("No matching patients found.")
-
 def display_patient_data_with_delete(patient_data):
     if patient_data:
         df = pd.DataFrame(patient_data, columns=["Patient ID", "First Name", "Last Name", "Age", "Gender", "Height", "Weight", "Allergies", "Address", "Insurance Provider"])
