@@ -1,11 +1,31 @@
 import streamlit as st
 import pandas as pd
 import psycopg2 as pg
+import datacred as dc
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 
 
-import datacred as dc
+
+def get_gradient_style():
+    """
+    Defines the CSS style targeting the main app container.
+    """
+    return """
+    <style>
+      [data-testid="stAppViewContainer"] {
+        background: linear-gradient(to bottom, #e0e7ff, #d1e0fc);
+      }
+
+      [data-testid="stSidebar"] {
+        background: linear-gradient(to bottom, #e0e7ff, #d1e0fc) !important;
+      }
+    </style>
+    """
+
+
+st.markdown(get_gradient_style(), unsafe_allow_html=True)
+
 
 # Function to initialize PostgreSQL connection
 def init_connection():
