@@ -4,15 +4,47 @@ import psycopg2 as pg
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 
-# Function to initialize database connection
+
+import datacred as dc
+
+# Function to initialize PostgreSQL connection
 def init_connection():
-    return pg.connect(**st.secrets["postgres"])
+    conn = pg.connect(
+        host=dc.host,
+        user=dc.user,
+        password=dc.password,
+        database=dc.database,
+        port=dc.port
+    )
+    return conn
 
 # Function to run SQL queries
 def run_query(query):
-    with init_connection().cursor() as cur:
+    conn = init_connection()
+    with conn.cursor() as cur:
         cur.execute(query)
-        return cur.fetchall()
+        result = cur.fetchall()
+    conn.close()
+    return result
+
+
+
+
+## /// ----------------------------------------------------------------
+
+# # Function to initialize database connection
+# def init_connection():
+#     return pg.connect(**st.secrets["postgres"])
+
+# # Function to run SQL queries
+# def run_query(query):
+#     with init_connection().cursor() as cur:
+#         cur.execute(query)
+#         return cur.fetchall()
+
+## /// ----------------------------------------------------------------
+
+
 
 # Display Invoice Data
 def display_invoices():
