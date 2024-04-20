@@ -21,7 +21,14 @@ def staff_page():
 
 
 def mysqlconn():
-    connection = mysql.connector.connect(
+    # connection = mysql.connector.connect(
+    #     host=dc.host,
+    #     user=dc.user,
+    #     password=dc.password,
+    #     database=dc.database,
+    #     port=dc.port
+    # )
+    connection = psycopg2.connect(
         host=dc.host,
         user=dc.user,
         password=dc.password,
@@ -83,7 +90,7 @@ def add_new_patient():
 
 def insert_new_patient(name, age, gender, height, weight, address):
     try:
-        connection = mysql.connector.connect(
+        connection = psycopg2.connect(
             host=dc.host,
             user=dc.user,
             password=dc.password,
