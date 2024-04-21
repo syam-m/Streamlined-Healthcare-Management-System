@@ -9,15 +9,15 @@
 
 -- Data Base Creation
 
-CREATE DATABASE "PatientData"					-- jbudigin
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'en_US.UTF-8'
-    LC_CTYPE = 'en_US.UTF-8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+-- CREATE DATABASE "PatientData"					-- jbudigin
+--     WITH
+--     OWNER = postgres
+--     ENCODING = 'UTF8'
+--     LC_COLLATE = 'en_US.UTF-8'
+--     LC_CTYPE = 'en_US.UTF-8'
+--     TABLESPACE = pg_default
+--     CONNECTION LIMIT = -1
+--     IS_TEMPLATE = False;
 
 
 -- Rawdata / Master Table 
@@ -64,7 +64,8 @@ CREATE TABLE Patients (							-- smungi
     Weight DECIMAL(5,2),
     Allergies VARCHAR(250),
     Address VARCHAR(250) NOT NULL,
-    Insurance_Provider VARCHAR(20)
+    Insurance_Provider VARCHAR(20),
+    Unique(Patient_First_Name, Patient_Last_Name)
 );
 
 
@@ -78,7 +79,7 @@ CREATE TABLE Doctors (							-- smungi
 CREATE TABLE Visits (							-- jbudigin
     Visit_ID SERIAL PRIMARY KEY,
     Patient_ID INT,
-    Record_ID INT,
+    Record_ID SERIAL,     --- change
     Admission_Type VARCHAR(10),
     Visit_Date DATE,
     Room_Number VARCHAR(10),
@@ -109,6 +110,7 @@ SELECT DISTINCT
     Allergies,
     Address,
     Insurance_Provider
+
 FROM PatientRecords;
 
 

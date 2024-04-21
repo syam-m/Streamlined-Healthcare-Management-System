@@ -2,7 +2,27 @@ import psycopg2
 import streamlit as st
 import datacred as dc
 
-# Connect to PostgreSQL database
+def get_gradient_style():
+    """
+    Defines the CSS style targeting the main app container.
+    """
+    return """
+    <style>
+      [data-testid="stAppViewContainer"] {
+        background: linear-gradient(to bottom, #e0e7ff, #d1e0fc);
+      }
+
+      [data-testid="stSidebar"] {
+        background: linear-gradient(to bottom, #e0e7ff, #d1e0fc) !important;
+      }
+    </style>
+    """
+
+
+st.markdown(get_gradient_style(), unsafe_allow_html=True)
+
+
+
 connection = psycopg2.connect(
         host=dc.host,
         user=dc.user,
