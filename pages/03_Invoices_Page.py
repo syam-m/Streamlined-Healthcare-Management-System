@@ -5,37 +5,6 @@ import datacred as dc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import base64
-
-def get_gradient_style(image_path, image_width, image_height,opacity):
-    """
-    Defines the CSS style targeting the main app container.
-    """
-    with open(image_path, "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode()
-    
-    return f"""
-    <style>
-      [data-testid="stAppViewContainer"] {{
-        
-        background-image: url('data:image/png;base64,{encoded_image}');
-        background-size: {image_width}px {image_height}px;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        opacity: {opacity};
-      }}
-
-      [data-testid="stSidebar"] {{
-        background: linear-gradient(to bottom, #e0e7ff, #d1e0fc) !important;
-      }}
-    </style>
-    """
-
-image_path = "images/adt_bg.jpg"
-image_width = 1500  # Adjust as needed
-image_height = 750 # Adjust as needed
-opacity = 0.9    # Adjust opacity as needed, value between 0 and 1
-
 
 # Function to initialize PostgreSQL connection
 def init_connection():
@@ -246,8 +215,6 @@ def display_most_used_insurance_providers():
 def main():
     st.title("Invoices Data")
         
-    st.markdown(get_gradient_style(image_path, image_width, image_height,opacity), unsafe_allow_html=True)
-
     # Display navigation options
     navigation = st.sidebar.radio("Navigation", ["Display Invoices", "Filter and Search", "Analysis"])
     # Execute functionality based on user choice
