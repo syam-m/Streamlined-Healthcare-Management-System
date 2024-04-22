@@ -1,15 +1,18 @@
 import streamlit as st
+import base64
 
 def show_homepage():
   st.set_page_config(page_title="Hospital Management System", page_icon="")
   st.markdown(get_gradient_style(image_path, image_width, image_height), unsafe_allow_html=True)
 
   #st.markdown(get_gradient_style(), unsafe_allow_html=True)
-  st.title("Welcome to the Hospital Management System")
+  #st.title("Welcome to the Hospital Management System")
+  st.title("Electronic health record system (EHRS)")
+
+  st.write("Welcome to the Hospital Management System")
   st.write("A comprehensive system for managing patients, doctors, and hospital operations.")
 
 
-import base64
 
 def get_gradient_style(image_path, image_width, image_height):
     """

@@ -21,6 +21,7 @@ def get_gradient_style():
 
 
 st.markdown(get_gradient_style(), unsafe_allow_html=True)
+st.title("Patients")
 
 conn = psycopg2.connect(
           host=dc.host,
