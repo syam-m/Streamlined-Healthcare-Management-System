@@ -5,36 +5,25 @@ import pandas as pd
 from psycopg2 import IntegrityError
 
 
-import base64
 
-def get_gradient_style(image_path, image_width, image_height,opacity):
+def get_gradient_style():
     """
     Defines the CSS style targeting the main app container.
     """
-    with open(image_path, "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode()
-    
-    return f"""
+    return """
     <style>
-      [data-testid="stAppViewContainer"] {{
-        
-        background-image: url('data:image/png;base64,{encoded_image}');
-        background-size: {image_width}px {image_height}px;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        opacity: {opacity};
-      }}
+      [data-testid="stAppViewContainer"] {
+        background: linear-gradient(to bottom, #e0e7ff, #d1e0fc);
+      }
 
-      [data-testid="stSidebar"] {{
+      [data-testid="stSidebar"] {
         background: linear-gradient(to bottom, #e0e7ff, #d1e0fc) !important;
-      }}
+      }
     </style>
     """
 
-image_path = "images/adt_bg.jpg"
-image_width = 1500  # Adjust as needed
-image_height = 750 # Adjust as needed
-opacity = 0.9    # Adjust opacity as needed, value between 0 and 1
+
+st.markdown(get_gradient_style(), unsafe_allow_html=True)
 
 def doctors_page():
     st.title("Doctors Page")
