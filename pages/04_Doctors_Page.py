@@ -29,7 +29,7 @@ def doctors_page():
     st.title("Doctors Page")
     st.markdown(get_gradient_style(), unsafe_allow_html=True)
 
-    # Form for adding new doctors
+
     st.header("Add New Doctor")
     doctor_name = st.text_input("Doctor Name")
     doctor_specialty = st.text_input("Doctor Specialty")
@@ -41,11 +41,11 @@ def doctors_page():
         else:
             st.error("Please fill in all fields.")
 
-    # Main content for searching doctors
+
     st.write("---")
     st.header("Search Doctors")
 
-    # Text input for searching doctors by name
+
     search_name = st.text_input("Search Doctor by Name")
     if search_name:
         st.write(f"Search Results for '{search_name}':")
@@ -56,7 +56,7 @@ def doctors_page():
         else:
             st.write("No results found.")
 
-    # Dropdown menu for selecting departments
+
     search_department = st.selectbox("Search Doctors by Department", [""] + departments)
     if search_department:
         st.write(f"Search Results for Doctors in '{search_department}' Department:")
@@ -67,7 +67,7 @@ def doctors_page():
         else:
             st.write("No results found.")
 
-    # Delete selected doctors
+
     if st.button("Delete Selected Doctors"):
         selected_doctors = [row['doctor_id'] for index, row in search_results.iterrows() if row['Selected']]
         if selected_doctors:
@@ -151,10 +151,10 @@ def delete_doctor_and_update_visits(doctor_ids):
     )
     cursor = connection.cursor()
     try:
-        # Update visits referencing the doctor to be deleted
+
         cursor.execute("UPDATE visits SET doctor_id = (SELECT doctor_id FROM doctors WHERE Doctor_Name = 'Dr. Temp') WHERE doctor_id IN %s", (tuple(doctor_ids),))
         
-        # Delete the doctor
+
         cursor.execute("DELETE FROM doctors WHERE Doctor_ID IN %s", (tuple(doctor_ids),))
         
         connection.commit()

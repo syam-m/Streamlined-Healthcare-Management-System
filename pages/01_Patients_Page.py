@@ -38,12 +38,10 @@ def fetch_patient_data():
     # print(rows)
     return rows
 
-# Function to display patient data
 def display_patient_data(patient_data):
     df = pd.DataFrame(patient_data, columns=["Patient ID", "First Name", "Last Name", "Age", "Gender", "Height", "Weight", "Allergies", "Address", "Insurance Provider"])
     st.dataframe(df)
 
-# Function to insert new patient data into the database
 def insert_patient_data(first_name, last_name, age, gender, height, weight, allergies, address, insurance_provider):
     cur.execute("INSERT INTO Patients (Patient_First_Name, Patient_Last_Name, Age, Gender, Height, Weight, Allergies, Address, Insurance_Provider) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (first_name, last_name, age, gender, height, weight, allergies, address, insurance_provider))
@@ -54,16 +52,13 @@ def display_patient_data_with_delete(patient_data):
     if patient_data:
         df = pd.DataFrame(patient_data, columns=["Patient ID", "First Name", "Last Name", "Age", "Gender", "Height", "Weight", "Allergies", "Address", "Insurance Provider"])
         
-        # Add a checkbox column for each record
         df["Delete"] = df.apply(lambda row: st.checkbox("", value=False, key=f"delete_{row['Patient ID']}"), axis=1)
         
-        # Display the DataFrame with checkboxes
         st.dataframe(df)
 
-        # Get the Patient IDs marked for deletion
         patient_ids_to_delete = [row["Patient ID"] for idx, row in df.iterrows() if row["Delete"]]
         
-        # Delete the selected records if the delete button is clicked
+
         if st.button("Delete Selected"):
             for patient_id in patient_ids_to_delete:
                 delete_patient_record(patient_id)
@@ -73,7 +68,7 @@ def display_patient_data_with_delete(patient_data):
 
 
 
-# Function to delete a patient record from the database
+
 def delete_patient_record(patient_id):
         cur.execute("DELETE FROM Patients WHERE Patient_ID = %s", (patient_id,))
         conn.commit()
@@ -95,11 +90,11 @@ def add_patient_form():
         insert_patient_data(first_name, last_name, age, gender, height, weight, allergies, address, insurance_provider)
     
 
-# Function to display the search patients section
+
 def search_patients():
     st.subheader("Search Patients")
     search_term = st.text_input("Enter patient's first or last name:")
-    # Execute SQL query to search for matching patients
+
     if search_term:
         search_query = f"""
         SELECT * FROM Patients
@@ -108,35 +103,35 @@ def search_patients():
         cur.execute(search_query)
         search_results = cur.fetchall()
         
-     # Display search results with delete option
+
         if search_results:
             st.write("Search Results:")
             display_patient_data_with_delete(search_results)
-            # handle_delete_patient(search_results)  # Handle deletion of records
+
         else:
             st.write("No matching patients found.")
     else:
-        # If no search term is provided, display all patient data
+
         fetch_patient_data()
 
-# Function to display the patient profile section
+
 def patient_profile():
     st.subheader("Patient Profile")
-    # Fetch all patient data from the database
+
     patient_data = fetch_patient_data()
     
-    # Check if there are any patient records
+
     if patient_data:
-        # Convert patient data to DataFrame
+
         df = pd.DataFrame(patient_data, columns=["Patient ID", "First Name", "Last Name", "Age", "Gender", "Height", "Weight", "Allergies", "Address", "Insurance Provider"])
-        # Display patient data
+
         st.dataframe(df)
     else:
         st.write("No patient records found.")
 
 page_selection = st.sidebar.radio("Navigation", ["Search Patients","Add Patient", "Patient Profile"])
 
-# Display the selected section based on user choice
+
 if page_selection == "Search Patients":
     search_patients()
 elif page_selection == "Add Patient":

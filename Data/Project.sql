@@ -49,7 +49,7 @@ CREATE TABLE PatientRecords (					-- jbudigin
 );
 
 
-copy PatientRecords FROM '/Users/syam/Downloads/healthcare_data.csv' WITH (FORMAT CSV, HEADER);		-- smungi
+copy PatientRecords FROM '/healthcare_data.csv' WITH (FORMAT CSV, HEADER);		-- smungi
 
 
 -- Normalized schema creation

@@ -23,7 +23,7 @@ def get_gradient_style():
 st.markdown(get_gradient_style(), unsafe_allow_html=True)
 
 
-# Connect to PostgreSQL database
+
 connection = psycopg2.connect(
         host=dc.host,
         user=dc.user,
@@ -32,7 +32,7 @@ connection = psycopg2.connect(
         port=dc.port
     )
 
-# Function to get visit details by record ID
+
 def get_visit_details_by_record_id(record_id):
     cursor = connection.cursor()
     cursor.execute("""
@@ -46,7 +46,7 @@ def get_visit_details_by_record_id(record_id):
     cursor.close()
     return visit_details
 
-# Function to update specific visit details in Visits table
+
 def update_specific_visit_details(record_id, symptoms, tests, diagnosis_notes, prescription):
     cursor = connection.cursor()
     try:
@@ -63,14 +63,14 @@ def update_specific_visit_details(record_id, symptoms, tests, diagnosis_notes, p
     finally:
         cursor.close()
 
-# Streamlit page for modifying specific records
+
 def modify_specific_records():
     st.title("Modify Specific Records")
 
-    # Input field for record ID
+
     record_id = st.text_input("Search Visit Record by Record ID")
 
-    # Fetch visit details if record ID is provided
+
     visit_details = None
     if record_id:
         visit_details = get_visit_details_by_record_id(record_id)
@@ -82,17 +82,17 @@ def modify_specific_records():
             st.write(f"Patient Name: {visit_details[1]} {visit_details[2]}")
             st.write(f"Doctor Name: {visit_details[3]}")
 
-            # Input fields for modifying specific details
+
             st.subheader("Modify Specific Visit Details")
             symptoms = st.text_area("Symptoms", visit_details[4])
             tests = st.text_area("Tests", visit_details[5])
             diagnosis_notes = st.text_area("Diagnosis Notes", visit_details[6])
             prescription = st.text_area("Prescription", visit_details[7])
 
-            # Button to update specific details
+
             if st.button("Update Specific Details"):
                 update_specific_visit_details(record_id, symptoms, tests, diagnosis_notes, prescription)
 
-# Call the Streamlit page
+
 if __name__ == "__main__":
     modify_specific_records()
