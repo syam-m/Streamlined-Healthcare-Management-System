@@ -31,7 +31,7 @@ connection = psycopg2.connect(
         port=dc.port
     )
 
-# Function to insert visit details into Visits table
+
 def insert_visit_details(patient_id, admission_type, visit_date, room_number, doctor_id, symptoms, tests, diagnosis_notes, prescription, payment_amount, payment_method, payment_invoice_number):
     cursor = connection.cursor()
     try:
@@ -53,7 +53,7 @@ def insert_visit_details(patient_id, admission_type, visit_date, room_number, do
     finally:
         cursor.close()
 
-# Function to get patient IDs, first names, and last names based on search
+
 def get_patients_by_name(name):
     cursor = connection.cursor()
     cursor.execute("SELECT Patient_ID, Patient_First_Name, Patient_Last_Name FROM Patients WHERE LOWER(Patient_Last_Name) LIKE LOWER(%s) OR LOWER(Patient_First_Name) LIKE LOWER(%s)", ('%' + name + '%', '%' + name + '%'))
@@ -61,7 +61,7 @@ def get_patients_by_name(name):
     cursor.close()
     return patients
 
-# Get doctor IDs and names
+
 def get_doctors():
     cursor = connection.cursor()
     cursor.execute("SELECT Doctor_ID, Doctor_Name FROM Doctors")
@@ -69,11 +69,11 @@ def get_doctors():
     cursor.close()
     return doctors
 
-# Streamlit page
+
 def main():
     st.title("Enter Visit Details")
 
-    # Input fields
+
     name = st.text_input("Search Patient by First or Last Name")
     patients = get_patients_by_name(name)
     patient_options = [f"{patient[0]} - {patient[1]} {patient[2]}" for patient in patients]
@@ -99,7 +99,7 @@ def main():
         payment_method = st.selectbox("Payment Method", ["Cash", "Credit Card", "Insurance"])
         payment_invoice_number = st.text_input("Payment Invoice Number")
 
-        # Button to submit
+
         if st.button("Submit"):
             if selected_patient_ids:
                 for patient_id in selected_patient_ids:
